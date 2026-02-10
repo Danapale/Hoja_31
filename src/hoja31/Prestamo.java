@@ -1,7 +1,7 @@
 package hoja31;
 import java.time.LocalDate;
 
-import static java.time.LocalDate.*;
+import static java.lang.StringUTF16.compareTo;
 
 public class Prestamo {
     private String codigoLibro;
@@ -16,9 +16,13 @@ public class Prestamo {
         this.socio=socio;
         this.tituloLibro=tituloLibro;
         this.fechaPrestamo=fechaPrestamo;
+        while(codigoLibro.matches("[0-9]{3}[0-9]{4}")==false){
+            System.out.println("inserte un email valido");
+            this.codigoLibro=codigoLibro;
+        }
     }
     public void registrarDevolucion(LocalDate fechaDevolucion){
-        if(fechaDevolucion==null){}
+        if(fechaDevolucion==null || compareTo(fechaDevolucion fechaPrestamo)){}
         //else if(fechaDevolucion){}
 
     }
