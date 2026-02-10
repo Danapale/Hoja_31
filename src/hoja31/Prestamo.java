@@ -1,7 +1,11 @@
 package hoja31;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Date;
 
-import static java.lang.StringUTF16.compareTo;
+import static java.time.Duration.between;
+import static java.time.Period.between;
+
 
 public class Prestamo {
     private String codigoLibro;
@@ -16,21 +20,39 @@ public class Prestamo {
         this.socio=socio;
         this.tituloLibro=tituloLibro;
         this.fechaPrestamo=fechaPrestamo;
+        this.fechaDevolucionPrevista=fechaPrestamo.plusDays(14);
         while(codigoLibro.matches("[0-9]{3}[0-9]{4}")==false){
             System.out.println("inserte un email valido");
             this.codigoLibro=codigoLibro;
         }
     }
     public void registrarDevolucion(LocalDate fechaDevolucion){
-        if(fechaDevolucion==null || compareTo(fechaDevolucion fechaPrestamo)){}
-        //else if(fechaDevolucion){}
+        if(fechaDevolucion==null || fechaDevolucion.isBefore(fechaPrestamo)){
+            System.out.println("Devolucion no valida");
+        }
+        else{
+            fechaDevolucionReal=fechaDevolucion;
 
+        }
     }
     public int calcularDiasRetraso(){
-        return 2;
+        Duration duration=null;
+        Duration retraso=duration.between(fechaDevolucionPrevista,fechaDevolucionReal);
+        int ret = Integer.parseInt(String.valueOf(retraso));
+        if(ret>0){
+            return ret;
+        }
+        else{
+            return 0;
+        }
     }
     public boolean estaRetrasado(){
-        return false;
+        if(calcularDiasRetraso()==0){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
     @Override
     public String toString() {
