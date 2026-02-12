@@ -27,8 +27,13 @@ public class GestorBiblioteca /*<Prestamo>*/ {
             }
         }
         if(comp==0) {
-            usuarios[numeroUsuarios] = usuario;
-            numeroUsuarios++;
+            if(numeroUsuarios > MAX_USUARIOS){
+                System.out.println("no se admiten más usuarios");
+            }
+            else {
+                usuarios[cont] = usuario;
+                numeroUsuarios++;
+            }
         }
         else{
            throw new UsuarioRepetidoException("Este usuario ya esta registrado");
@@ -46,7 +51,7 @@ public class GestorBiblioteca /*<Prestamo>*/ {
         comp=0;
         cont=numeroPrestamos;
         while(cont>0){
-            if(codigoLibro == pr.getCodigoLibro()){
+            if(codigoLibro == prestamos[cont].getCodigoLibro()){
                 comp=1;
             }
             else{
@@ -54,13 +59,45 @@ public class GestorBiblioteca /*<Prestamo>*/ {
             }
         }
         if(comp==0) {
-            usuarios[numeroUsuarios] = usuario;
-            numeroUsuarios++;
+            if(numeroPrestamos>MAX_PRESTAMOS){
+                System.out.println("no se admiten más prestamos");
+            }
+            else {
+                prestamos[numeroPrestamos] = pr;
+                numeroPrestamos++;
+            }
         }
         else{
-            throw new UsuarioRepetidoException("Este usuario ya esta registrado");
+            throw new LibroNoDisponibleException("Este usuario ya esta registrado");
         }
 
+    }
+    public boolean devolverLibro (String codigoLibro, LocalDate fechaDevolucion){
+        //ver si se sanciona o no
+        comp=0;
+        cont=numeroPrestamos;
+        while(cont>0 || comp==1){
+            if(codigoLibro == prestamos[cont].getCodigoLibro()){
+                comp=1;
+            }
+            else{
+                cont--;
+            }
+        }
+        if(comp==1){
+            LocalDate fdp = prestamos[cont].getFechaDevolucionPrevista();
+            Usuario urs = (Usuario) prestamos[cont].getSocio();
+            if(fdp.isBefore(fechaDevolucion)==true){
+                urs.sancionar((int) fechaDevolucion.getDayOfYear()- fdp.getDayOfYear());
+            }
+            if(fechaDevolucion.isBefore(prestamos[cont].getFechaPrestamo())){
+                throw new PrestamoInvalidoException("inserte una fecha correcta");
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     public Usuario buscarUsuario(Usuario usuario){
         return usuario;

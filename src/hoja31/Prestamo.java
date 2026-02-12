@@ -66,4 +66,14 @@ public class Prestamo <Usuario>{
     public String getCodigoLibro() {
         return codigoLibro;
     }
+    public LocalDate getFechaDevolucionPrevista() {
+        return fechaDevolucionPrevista;
+    }
+    public Usuario getSocio() {
+        return socio;
+    }
+
+    public LocalDate getFechaPrestamo() {
+        return fechaPrestamo;
+    }
 }

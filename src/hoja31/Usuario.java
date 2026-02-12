@@ -24,12 +24,12 @@ public class Usuario {
             throw new UsuarioInvalidoException("El numero de socio tiene que ser valido");
         }
     }
-    public void sancionar(){
+    public void sancionar(int num){
         if(fechaFinSancion==null){
-            fechaFinSancion=LocalDate.now().plusDays(30);
+            fechaFinSancion=LocalDate.now().plusDays(num);
         }
         else{
-            fechaFinSancion=fechaFinSancion.plusDays(30);
+            fechaFinSancion=fechaFinSancion.plusDays(num);
         }
     }
     public void levantarSancion(){
