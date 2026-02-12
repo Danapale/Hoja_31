@@ -2,12 +2,13 @@ package hoja31;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 import static java.time.Duration.between;
 import static java.time.Period.between;
 
 
-public class Prestamo {
+public class Prestamo <Usuario>{
     private String codigoLibro;
     private String tituloLibro;
     private Usuario socio;
@@ -21,14 +22,13 @@ public class Prestamo {
         this.tituloLibro=tituloLibro;
         this.fechaPrestamo=fechaPrestamo;
         this.fechaDevolucionPrevista=fechaPrestamo.plusDays(14);
-        while(codigoLibro.matches("[0-9]{3}[0-9]{4}")==false){
-            System.out.println("inserte un email valido");
-            this.codigoLibro=codigoLibro;
+        if(codigoLibro.matches("[0-9]{3}[0-9]{4}")==false){
+            throw new PrestamoInvalidoException("inserte un codigo valido");
         }
     }
     public void registrarDevolucion(LocalDate fechaDevolucion){
         if(fechaDevolucion==null || fechaDevolucion.isBefore(fechaPrestamo)){
-            System.out.println("Devolucion no valida");
+            throw new PrestamoInvalidoException("inserte una fecha correcta");
         }
         else{
             fechaDevolucionReal=fechaDevolucion;
@@ -62,5 +62,8 @@ public class Prestamo {
         else{
             return "codigo libro: "+codigoLibro+"\ntitulo libro: "+tituloLibro+"\nsocio: "+socio+"\nfecha prestamo: "+fechaPrestamo+"\nfecha devolucion: "+fechaDevolucionReal;
         }
+    }
+    public String getCodigoLibro() {
+        return codigoLibro;
     }
 }

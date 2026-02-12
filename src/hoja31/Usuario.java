@@ -17,14 +17,11 @@ public class Usuario {
         this.numeroSocio=numeroSocio;
         this.fechaRegistro=fechaRegistro;
         fechaFinSancion=null;
-        while(email.matches("[a-zA-Z0-9]*@[a-zA-Z0-9]*[.][a-z]*")==false){
-            //throw new UsuarioInvalidoException();
-            System.out.println("inserte un email valido");
-            this.email=email;
+        if(email.matches("[a-zA-Z0-9]*@[a-zA-Z0-9]*[.][a-z]*")==false){
+            throw new UsuarioInvalidoException("El email tiene que ser valido");
         }
         while(numeroSocio.matches("SOC[0-9]{5}")==false){
-            System.out.println("inserte un email valido");
-            this.email=email;
+            throw new UsuarioInvalidoException("El numero de socio tiene que ser valido");
         }
     }
     public void sancionar(){
