@@ -2,7 +2,7 @@ package hoja31;
 
 import java.time.LocalDate;
 
-public class GestorBiblioteca /*<Prestamo>*/ {
+public class GestorBiblioteca /*Usuario*/ {
     private static int MAX_USUARIOS = 50;
     private static int MAX_PRESTAMOS = 200;
     private Usuario[] usuarios;
