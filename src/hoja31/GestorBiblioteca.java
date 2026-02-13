@@ -1,12 +1,13 @@
 package hoja31;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class GestorBiblioteca /*Usuario*/ {
     private static int MAX_USUARIOS = 50;
     private static int MAX_PRESTAMOS = 200;
-    private Usuario[] usuarios;
-    private Prestamo[] prestamos;
+    private Usuario[] usuarios = new Usuario[MAX_USUARIOS];
+    private Prestamo[] prestamos = new Prestamo[MAX_PRESTAMOS];
     private int numeroUsuarios=0;
     private int numeroPrestamos=0;
     private int comp;
@@ -102,6 +103,14 @@ public class GestorBiblioteca /*Usuario*/ {
     public Usuario buscarUsuario(Usuario usuario){
         return usuario;
     }
-
-
+    public Prestamo[] getPrestamos() {
+        return prestamos;
+    }
+    public Usuario[] getUsuarios() {
+        return usuarios;
+    }
+    @Override
+    public String toString() {
+        return Arrays.toString(getPrestamos()) + Arrays.toString(getUsuarios());
+    }
 }

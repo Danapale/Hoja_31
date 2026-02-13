@@ -47,4 +47,7 @@ public class Usuario {
             return "nombre: "+nombre+"\nemail: "+email+"\nnumero de socio: "+numeroSocio;
         }
     }
+    public LocalDate getFechaFinSancion() {
+        return fechaFinSancion;
+    }
 }
