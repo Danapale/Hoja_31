@@ -3,7 +3,7 @@ package hoja31;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class GestorBiblioteca /*Usuario*/ {
+public class GestorBiblioteca{
     private static int MAX_USUARIOS = 50;
     private static int MAX_PRESTAMOS = 200;
     private Usuario[] usuarios;
@@ -18,6 +18,7 @@ public class GestorBiblioteca /*Usuario*/ {
         prestamos = new Prestamo[MAX_PRESTAMOS];
         numeroPrestamos=0;
         numeroPrestamos=0;
+
     }
     public void registrarUsuario(Usuario usuario){
         comp=0;
