@@ -6,15 +6,18 @@ import java.util.Arrays;
 public class GestorBiblioteca /*Usuario*/ {
     private static int MAX_USUARIOS = 50;
     private static int MAX_PRESTAMOS = 200;
-    private Usuario[] usuarios = new Usuario[MAX_USUARIOS];
-    private Prestamo[] prestamos = new Prestamo[MAX_PRESTAMOS];
-    private int numeroUsuarios=0;
-    private int numeroPrestamos=0;
+    private Usuario[] usuarios;
+    private Prestamo[] prestamos;
+    private int numeroUsuarios;
+    private int numeroPrestamos;
     private int comp;
     private int cont;
 
     public GestorBiblioteca(){
-
+        usuarios=new Usuario[MAX_USUARIOS];
+        prestamos = new Prestamo[MAX_PRESTAMOS];
+        numeroPrestamos=0;
+        numeroPrestamos=0;
     }
     public void registrarUsuario(Usuario usuario){
         comp=0;

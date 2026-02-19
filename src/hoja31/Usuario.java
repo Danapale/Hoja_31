@@ -50,4 +50,8 @@ public class Usuario {
     public LocalDate getFechaFinSancion() {
         return fechaFinSancion;
     }
+
+    public String getNumeroSocio() {
+        return numeroSocio;
+    }
 }
