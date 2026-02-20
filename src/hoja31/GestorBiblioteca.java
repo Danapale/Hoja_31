@@ -11,7 +11,9 @@ public class GestorBiblioteca{
     private int numeroUsuarios;
     private int numeroPrestamos;
     private int comp;
-    private int cont;
+    //private int cont;
+    public int pilaUrs=0;
+    public int pilaPres=0;
 
     public GestorBiblioteca(){
         usuarios=new Usuario[MAX_USUARIOS];
@@ -22,13 +24,13 @@ public class GestorBiblioteca{
     }
     public void registrarUsuario(Usuario usuario){
         comp=0;
-        cont=numeroUsuarios;
-        while(cont>0){
-            if(usuarios[cont] == usuario){
+        pilaUrs=numeroUsuarios;
+        while(pilaUrs>0){
+            if(usuarios[pilaUrs] == usuario){
                 comp=1;
             }
             else{
-                cont--;
+                pilaUrs--;
             }
         }
         if(comp==0) {
@@ -36,7 +38,7 @@ public class GestorBiblioteca{
                 System.out.println("no se admiten más usuarios");
             }
             else {
-                usuarios[cont] = usuario;
+                usuarios[pilaUrs] = usuario;
                 numeroUsuarios++;
             }
         }
@@ -54,13 +56,13 @@ public class GestorBiblioteca{
         }
 
         comp=0;
-        cont=numeroPrestamos;
-        while(cont>0){
-            if(codigoLibro == prestamos[cont].getCodigoLibro()){
+        pilaPres=numeroPrestamos;
+        while(pilaPres>0){
+            if(codigoLibro == prestamos[pilaPres].getCodigoLibro()){
                 comp=1;
             }
             else{
-                cont--;
+                pilaPres--;
             }
         }
         if(comp==0) {
@@ -80,22 +82,22 @@ public class GestorBiblioteca{
     public boolean devolverLibro (String codigoLibro, LocalDate fechaDevolucion){
         //ver si se sanciona o no
         comp=0;
-        cont=numeroPrestamos;
-        while(cont>0 || comp==1){
-            if(codigoLibro == prestamos[cont].getCodigoLibro()){
+        pilaPres=numeroPrestamos;
+        while(pilaPres>0 || comp==1){
+            if(codigoLibro == prestamos[pilaPres].getCodigoLibro()){
                 comp=1;
             }
             else{
-                cont--;
+                pilaPres--;
             }
         }
         if(comp==1){
-            LocalDate fdp = prestamos[cont].getFechaDevolucionPrevista();
-            Usuario urs = (Usuario) prestamos[cont].getSocio();
+            LocalDate fdp = prestamos[pilaPres].getFechaDevolucionPrevista();
+            Usuario urs = (Usuario) prestamos[pilaPres].getSocio();
             if(fdp.isBefore(fechaDevolucion)==true){
                 urs.sancionar((int) fechaDevolucion.getDayOfYear()- fdp.getDayOfYear());
             }
-            if(fechaDevolucion.isBefore(prestamos[cont].getFechaPrestamo())){
+            if(fechaDevolucion.isBefore(prestamos[pilaPres].getFechaPrestamo())){
                 throw new PrestamoInvalidoException("inserte una fecha correcta");
             }
             return true;
@@ -104,8 +106,27 @@ public class GestorBiblioteca{
             return false;
         }
     }
-    public Usuario buscarUsuario(Usuario usuario){
-        return usuario;
+    public Usuario buscarUsuario(String numeroSocio){
+        int cont;
+        cont = usuarios.length;
+        int comp=0;
+        while(cont>0){
+            if(usuarios[cont].getNumeroSocio()==numeroSocio){
+                comp=1;
+                break;
+            }
+            else{
+                cont--;
+            }
+        }
+        if(comp==1){
+            return usuarios[cont];
+        }
+        else{
+            System.out.println("ese usuario no existe");
+            return null;
+        }
+
     }
     public Prestamo[] getPrestamos() {
         return prestamos;
@@ -116,5 +137,13 @@ public class GestorBiblioteca{
     @Override
     public String toString() {
         return Arrays.toString(getPrestamos()) + Arrays.toString(getUsuarios());
+    }
+
+    public int getPilaPres() {
+        return pilaPres;
+    }
+
+    public int getPilaUrs() {
+        return pilaUrs;
     }
 }

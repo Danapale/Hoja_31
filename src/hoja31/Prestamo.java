@@ -22,7 +22,7 @@ public class Prestamo <Usuario>{
         this.tituloLibro=tituloLibro;
         this.fechaPrestamo=fechaPrestamo;
         this.fechaDevolucionPrevista=fechaPrestamo.plusDays(14);
-        if(codigoLibro.matches("[0-9]{3}[0-9]{4}")==false){
+        if(codigoLibro.matches("[A-Z]{3}[0-9]{4}")==false){
             throw new PrestamoInvalidoException("inserte un codigo valido");
         }
     }

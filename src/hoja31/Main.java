@@ -19,7 +19,6 @@ public class Main {
         int dia_registro;
         int eleccion = 0;
         GestorBiblioteca biblioteca = new GestorBiblioteca();
-        Usuario[] usuarios = new Usuario[50];
         String codigo_libro = "";
         String titulo_libro;
         LocalDate fecha_prestamo;
@@ -38,8 +37,8 @@ public class Main {
             if (eleccion == 1) {
                 System.out.println("inserte el nombre de usuario");
                 nombre_usuario = sc.nextLine();
+                System.out.println("inserte el email");
                 try{
-                    System.out.println("inserte el email");
                     email_usuario = sc.nextLine();
                 } catch (UsuarioInvalidoException uie) {
                     System.out.println("Inserte un email valido");
@@ -64,52 +63,68 @@ public class Main {
             }
             if (eleccion == 2) {
                 System.out.println("inserte el codigo de libro");
-                codigo_libro = sc.nextLine();
+                try{
+                    codigo_libro = sc.nextLine();
+                }
+                catch (PrestamoInvalidoException pie){
+                    System.out.println("El codigo del libro tiene que ser valido");
+                }
                 System.out.println("Inserte el titulo del libro");
                 titulo_libro = sc.nextLine();
-                biblioteca.realizarPrestamo(codigo_usuario, usuarios[cont], titulo_libro, LocalDate.now());
+                biblioteca.realizarPrestamo(codigo_usuario, biblioteca.getUsuarios()[biblioteca.pilaUrs], titulo_libro, LocalDate.now());
 
             }
             if (eleccion == 3) {
-                biblioteca.devolverLibro(codigo_libro, LocalDate.now());
+                System.out.println("Inserte el codigo de libro a devolver");
+                codigo_libro= sc.nextLine();
+                try{
+                    biblioteca.devolverLibro(codigo_libro, LocalDate.now());
+                }
+                catch (PrestamoInvalidoException pie){
+                    System.out.println("la fecha no es correcta");
+                }
             }
             if (eleccion == 4) {
-                System.out.println("elige a que usuario quieres consultar");
+                System.out.println("elige a que usuario quieres consultar poniendo el codigo de socio");
+
                 String user = sc.nextLine();
-                cont = usuarios.length;
+                /*cont = usuarios.length;
                 while (cont >= 0) {
                     if (usuarios[cont].getNumeroSocio() == user) {
                         usuarios[cont].estaSancionado();
                         break;
                     }
                     cont--;
-                }
+                }*/
+
+                biblioteca.buscarUsuario(user);
             }
             if (eleccion == 5) {
                 biblioteca.getPrestamos();
             }
             if (eleccion == 6) {
-                int[] cont2 = new int[usuarios.length];
+                int[] cont2 = new int[biblioteca.getUsuarios().length];
                 int con = 0;
-                cont = usuarios.length;
+                cont = biblioteca.getUsuarios().length;
+
                 while (cont > 0) {
-                    if (usuarios[cont].estaSancionado() == true) {
+                    if (biblioteca.getUsuarios()[cont].estaSancionado() == true) {
                         cont2[con] = cont;
                         con++;
                     }
                     cont--;
                 }
                 while (con != 0) {
-                    usuarios[cont2[con]].getNumeroSocio();
+                    biblioteca.getUsuarios()[cont2[con]].getNumeroSocio();
                     con--;
                 }
             }
             if (eleccion == 7) {
-                cont = usuarios.length;
+                cont = biblioteca.getUsuarios().length;
                 while (cont > 0) {
-                    if (usuarios[cont].estaSancionado() == true) {
-                        if (usuarios[cont].getFechaFinSancion().isBefore(LocalDate.now())) {
-                            usuarios[cont].levantarSancion();
+                    if (biblioteca.getUsuarios()[cont].estaSancionado() == true) {
+                        if (biblioteca.getUsuarios()[cont].getFechaFinSancion().isBefore(LocalDate.now())) {
+                            biblioteca.getUsuarios()[cont].levantarSancion();
                         }
                     }
                     cont++;
