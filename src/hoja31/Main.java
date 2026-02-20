@@ -25,6 +25,7 @@ public class Main {
         LocalDate fecha_dev_prev;
         LocalDate fecha_dev_real;
         int cont = 0;
+        String user;
 
 
         while (eleccion != 8) {
@@ -86,8 +87,7 @@ public class Main {
             }
             if (eleccion == 4) {
                 System.out.println("elige a que usuario quieres consultar poniendo el codigo de socio");
-
-                String user = sc.nextLine();
+                user = sc.nextLine();
                 /*cont = usuarios.length;
                 while (cont >= 0) {
                     if (usuarios[cont].getNumeroSocio() == user) {
