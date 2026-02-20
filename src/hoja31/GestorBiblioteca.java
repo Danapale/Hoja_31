@@ -18,7 +18,7 @@ public class GestorBiblioteca{
     public GestorBiblioteca(){
         usuarios=new Usuario[MAX_USUARIOS];
         prestamos = new Prestamo[MAX_PRESTAMOS];
-        numeroPrestamos=0;
+        numeroUsuarios=0;
         numeroPrestamos=0;
 
     }
@@ -108,15 +108,15 @@ public class GestorBiblioteca{
     }
     public Usuario buscarUsuario(String numeroSocio){
         int cont;
-        cont = usuarios.length;
+        cont = 0;
         int comp=0;
-        while(cont>0){
-            if(usuarios[cont].getNumeroSocio()==numeroSocio){
+        while(numeroUsuarios>cont){
+            if(usuarios[cont].getNumeroSocio().equals(numeroSocio)){
                 comp=1;
                 break;
             }
             else{
-                cont--;
+                cont++;
             }
         }
         if(comp==1){

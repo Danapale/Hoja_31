@@ -72,8 +72,8 @@ public class Main {
                 }
                 System.out.println("Inserte el titulo del libro");
                 titulo_libro = sc.nextLine();
-                biblioteca.realizarPrestamo(codigo_usuario, biblioteca.getUsuarios()[biblioteca.pilaUrs], titulo_libro, LocalDate.now());
-
+                biblioteca.realizarPrestamo(/*codigo_libro*/codigo_libro, biblioteca.getUsuarios()[biblioteca.pilaUrs], titulo_libro, LocalDate.now());
+                System.out.println("Código libro: "+codigo_libro+"  \nTítulo: "+titulo_libro+"\nNúmero de socio: "+codigo_usuario+ "\nFecha de préstamo (dd/mm/aaaa): " +LocalDate.now().getDayOfWeek()+"/"+LocalDate.now().getMonth()+"/"+LocalDate.now().getYear()+"Préstamo realizado. \nDevolución prevista: "+LocalDate.now().plusDays(14));
             }
             if (eleccion == 3) {
                 System.out.println("Inserte el codigo de libro a devolver");
@@ -97,7 +97,8 @@ public class Main {
                     cont--;
                 }*/
 
-                biblioteca.buscarUsuario(user);
+                Usuario a = biblioteca.buscarUsuario(user);
+                a.estaSancionado();
             }
             if (eleccion == 5) {
                 biblioteca.getPrestamos();
